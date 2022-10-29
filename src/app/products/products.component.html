@@ -1,0 +1,5 @@
+<div class="products">
+  <app-product [product]="item" *ngFor="let item of products$ | async"></app-product>
+</div>
+<p *ngIf="noResultsFound && !(loading$ | async)" style="text-align: center">No results found</p>
+<p #loadingElem class="loading" [style.opacity]="(loading$ | async) ? 1 : 0">loading...</p>

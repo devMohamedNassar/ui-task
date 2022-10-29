@@ -14,19 +14,21 @@
     </div>
     <div class="inner-header">
       <div class="inner-header__wrap">
-        <img class="inner-header__logo" src="assets/images/freshnesecom.png">
+        <a routerLink="/">
+          <img class="inner-header__logo" src="assets/images/freshnesecom.png">
+        </a>
         <div class="inner-header__cats-search-box">
           <div class="cats-search-box">
             <div class="cats-search-box__all-cats-wrap">
-              <select class="cats-search-box__all-cats">
-                <option value="" selected>All categories</option>
-                <option value="hurr">Durr</option>
+              <select [ngModel]="catName" (ngModelChange)="onSelectCat($event)" class="cats-search-box__all-cats">
+                <option value="">All categories</option>
+                <option *ngFor="let cat of cats$ | async" [value]="cat">{{cat}}</option>
               </select>
               <img class="cats-search-box__all-cats-arrow" src="assets/images/all-categories-arrow-icon.png">
             </div>
             <div class="cats-search-box__input-wrap">
-              <input placeholder="Search Products, categories ...">
-              <img src="assets/images/search-icon.svg">
+              <input [(ngModel)]="query" (keypress)="onKeyPress($event)" placeholder="Search Products, categories ...">
+              <img (click)="updateSearchQuery()" src="assets/images/search-icon.svg">
             </div>
           </div>
         </div>
@@ -35,7 +37,7 @@
         <img src="assets/images/user-icon.svg">
         <div class="inner-header__icons-basket-wrap">
           <img class="inner-header__icons-basket" src="assets/images/basket-icon.svg">
-          <div class="inner-header__icons-basket-count">5</div>
+          <div class="inner-header__icons-basket-count">{{cartTotalProducts$ | async}}</div>
         </div>
       </div>
     </div>
@@ -88,65 +90,17 @@
     <div class="main-content">
       <div class="sidebar">
         <h2 class="sidebar__title">Categories</h2>
+        <p *ngIf="loadingCats$ | async">Loading...</p>
         <ul class="sidebar__cats">
-          <li class="sidebar__cats-item">
-            <a href="#">Kitchen</a>
+          <li *ngFor="let cat of cats$ | async" class="sidebar__cats-item">
+            <a [routerLink]="'cat/' + cat" routerLinkActive="active">{{cat}}</a>
           </li>
-          <li class="sidebar__cats-item">
-            <a href="#">Meat and fish</a>
-          </li>
-          <li class="sidebar__cats-item">
-            <a href="#">Special nutrition</a>
-          </li>
-          <li class="sidebar__cats-item">
-            <a href="#">Pharmacy</a>
-          </li>
-          <li class="sidebar__cats-item">
-            <a href="#">Baby</a>
-          </li>
+          
         </ul>
       </div>
-      <div class="products">
-        <div class="product-card">
-          <p class="product-card__discount">-36%</p>
-          <img class="product-card__thumbnail" src="assets/images/product-thumbnail.png">
-          <h4 class="product-card__title">product title</h4>
-          <p class="product-card__description">Space for a small product description</p>
-          <div class="product-card__footer">
-            <h3 class="product-card__salary">
-              0.28 USD
-              <span>48.56</span>
-            </h3>
-            <button class="product-card__buy-now">Buy now</button>
-          </div>
-        </div>
-        <div class="product-card">
-          <p class="product-card__discount">-36%</p>
-          <img class="product-card__thumbnail" src="assets/images/product-thumbnail.png">
-          <h4 class="product-card__title">product title</h4>
-          <p class="product-card__description">Space for a small product description</p>
-          <div class="product-card__footer">
-            <h3 class="product-card__salary">
-              0.28 USD
-              <span>48.56</span>
-            </h3>
-            <button class="product-card__buy-now">Buy now</button>
-          </div>
-        </div>
-        <div class="product-card">
-          <p class="product-card__discount">-36%</p>
-          <img class="product-card__thumbnail" src="assets/images/product-thumbnail.png">
-          <h4 class="product-card__title">product title</h4>
-          <p class="product-card__description">Space for a small product description</p>
-          <div class="product-card__footer">
-            <h3 class="product-card__salary">
-              0.28 USD
-              <span>48.56</span>
-            </h3>
-            <button class="product-card__buy-now">Buy now</button>
-          </div>
-        </div>
-      </div>
+
+      <router-outlet></router-outlet>
+
     </div>
   </div>
 </main>

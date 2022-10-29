@@ -1,0 +1,13 @@
+<div class="product-card">
+  <p class="product-card__discount">-{{product.discountPercentage}}%</p>
+  <img class="product-card__thumbnail" [src]="product.thumbnail">
+  <h4 class="product-card__title" [title]="product.title">{{product.title}}</h4>
+  <p class="product-card__description" [title]="product.description">{{product.description}}</p>
+  <div class="product-card__footer">
+    <h3 class="product-card__salary">
+      {{product.price}} USD
+      <!-- <span>48.56</span> -->
+    </h3>
+    <button class="product-card__buy-now" (click)="addToCart()">Buy now</button>
+  </div>
+</div>
